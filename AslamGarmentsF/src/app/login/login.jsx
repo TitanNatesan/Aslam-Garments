@@ -17,22 +17,22 @@ export default function LoginSection({ onToggleFlip }) {
         setOpen(!open);
     };
 
-    useEffect(()=>{
+    useEffect(() => {
         document.title = "Login - Renz Trending";
         const token = localStorage.getItem("token");
-        axios.get(`${baseurl}/checkAuth/`,{
-            headers:{
+        axios.get(`${baseurl}/checkAuth/`, {
+            headers: {
                 Authorization: `Token ${token}`
             }
-        }).then((res)=>{
-            if(res.data.message==="Authenticated"){
+        }).then((res) => {
+            if (res.data.message === "Authenticated") {
                 localStorage.setItem("username", res.data.username);
                 window.location.href = "/";
             }
-        }).catch((err)=>{
+        }).catch((err) => {
             console.log(err);
         })
-    },[])
+    }, [])
 
     const Submit = () => {
         axios.post(`${baseurl}/login/`, {
@@ -45,7 +45,11 @@ export default function LoginSection({ onToggleFlip }) {
                 localStorage.setItem("email", res.data.email);
                 localStorage.setItem("username", res.data.username);
                 toast.success("Login Successful");
-                window.history.back();
+                if (document.referrer && !document.referrer.includes(window.location.href)) {
+                    window.location.href = document.referrer;
+                } else {
+                    window.location.href = "/";
+                }
             })
             .catch((err) => {
                 // console.log(err.response.data.error);
@@ -61,7 +65,7 @@ export default function LoginSection({ onToggleFlip }) {
     };
 
     return (
-        <div className="login">
+        <div className="login sticky top-0">
             <h3 className="section__title">Login</h3>
             <form className="form grid" onKeyDown={handleKeyPress}>
                 <label htmlFor="username">

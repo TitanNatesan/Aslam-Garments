@@ -69,7 +69,6 @@ export default function AccountsSection() {
       }
    }
 
-
    const [addresses, setAddresses] = useState([]);
    const deleteAddress = (id) => {
       axios.delete(`${baseurl}/profile/`, { headers: { Authorization: `Token ${localStorage.getItem('token')}` }, data: { type: 'addressDelete', id: id } })
@@ -86,6 +85,50 @@ export default function AccountsSection() {
          })
    }
 
+   const [currentPassword, setCurrentPassword] = useState("");
+   const [newPassword, setNewPassword] = useState("");
+   const [confirmPassword, setConfirmPassword] = useState("");
+
+   const ChangePassword = (e) => {
+      e.preventDefault();
+      if (!currentPassword || !newPassword || !confirmPassword) {
+         toast.error("All fields are required");
+         return;
+      }
+      if (newPassword !== confirmPassword) {
+         toast.error("Passwords do not match");
+         return;
+      }
+      axios.post(`${baseurl}/resetpass/`, {
+         old_password: currentPassword,
+         new_password: newPassword,
+         confirm_password: confirmPassword
+      }, {
+         headers: { Authorization: `Token ${localStorage.getItem('token')}` }
+      }).then((res) => {
+         if (res.data.message) {
+            toast.success(res.data.message);
+            setCurrentPassword("");
+            setNewPassword("");
+            setConfirmPassword("");
+         }
+      }).catch((err) => {
+         console.log(err)
+         if (err.response?.data?.error) {
+            const errors = err.response.data.error;
+            if (Array.isArray(errors)) {
+               // errors.forEach(error => toast.error(error));
+               errors.forEach((error, index) => {
+                  setTimeout(() => {
+                     toast.error(error);
+                  }, index * 200);
+               });
+            } else {
+               toast.error(errors);
+            }
+         }
+      });
+   }
 
    return (
       <section className="accounts section--lg">
@@ -229,7 +272,7 @@ export default function AccountsSection() {
                            <div key={address.id}>
                               {editableSA === address.id ?
                                  (
-                                    <AddressEdit address={address} setEditableSA={setEditableSA} GetAddress={GetAddress}/>
+                                    <AddressEdit address={address} setEditableSA={setEditableSA} GetAddress={GetAddress} />
                                  ) :
                                  (
                                     <div className="border border-gray-200  bg-white">
@@ -261,7 +304,7 @@ export default function AccountsSection() {
                   <div className="mt-4 w-full">
                      {editableSA === "new" ?
                         (
-                           <AddressEdit address={{}} setEditableSA={setEditableSA} GetAddress={GetAddress}/>
+                           <AddressEdit address={{}} setEditableSA={setEditableSA} GetAddress={GetAddress} />
                         ) : (
                            <button className="btn btn--md " onClick={() => setEditableSA("new")}>Add New Address</button>
                         )
@@ -315,21 +358,27 @@ export default function AccountsSection() {
                <div className={`tab__content ${activeTab === 'change-password' ? 'active-tab' : ''}`} id="change-password">
                   <h3 className="tab__header">Change Password</h3>
                   <div className="tab__body">
-                     <form className="grid form">
+                     <form className="grid form" onSubmit={ChangePassword}>
                         <input
-                           type="password"
+                           type="text"
                            placeholder="Current Password"
                            className="form__input"
+                           value={currentPassword}
+                           onChange={(e) => setCurrentPassword(e.target.value)}
                         />
                         <input
-                           type="password"
+                           type="text"
                            placeholder="New Password"
                            className="form__input"
+                           value={newPassword}
+                           onChange={(e) => setNewPassword(e.target.value)}
                         />
                         <input
-                           type="password"
+                           type="text"
                            placeholder="Confirm Password"
                            className="form__input"
+                           value={confirmPassword}
+                           onChange={(e) => setConfirmPassword(e.target.value)}
                         />
                         <div className="form__btn">
                            <button className="btn btn--md">Save</button>

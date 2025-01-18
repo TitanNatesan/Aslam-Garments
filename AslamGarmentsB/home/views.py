@@ -12,6 +12,8 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import OrderingFilter
 from rest_framework.authtoken.models import Token
+from django.core.exceptions import ValidationError
+from django.contrib.auth.password_validation import validate_password
 
 
 @api_view(["POST"])
@@ -94,6 +96,38 @@ def logout(request):
 @permission_classes([IsAuthenticated])
 def checkAuth(request):
     return Response({"message": "Authenticated", "username": request.user.username})
+
+
+@api_view(["POST"])
+@permission_classes([IsAuthenticated])
+def resetPassword(req):
+    if req.method == "POST":
+        try:
+            user_obj = models.Customer.objects.get(username=req.user.username)
+            old_pass = req.data.get("old_password")
+            new_pass = req.data.get("new_password")
+            confirm_pass = req.data.get("confirm_password")
+
+            user = authenticate(username=user_obj.username, password=old_pass)
+            if not user:
+                return Response({"error": "Old password Invalid"}, status=status.HTTP_400_BAD_REQUEST)
+            if not new_pass or not confirm_pass:
+                return Response({"error": "New or confirm password missing"}, status=status.HTTP_400_BAD_REQUEST)
+            if new_pass != confirm_pass:
+                return Response({"error": "Passwords do not match"}, status=status.HTTP_400_BAD_REQUEST)
+
+            try:
+                validate_password(new_pass, user)
+            except ValidationError as e:
+                return Response({"error": e.messages}, status=status.HTTP_400_BAD_REQUEST)
+
+            user_obj.set_password(new_pass)
+            user_obj.save()
+            return Response({"message": "Password has been reset"}, status=status.HTTP_200_OK)
+        except models.Customer.DoesNotExist:
+            return Response({"error": "User not found"}, status=status.HTTP_404_NOT_FOUND)
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 @api_view(["GET"])
@@ -622,7 +656,7 @@ def profile(request):
             return Response({"error": "Address not found"}, status=status.HTTP_404_NOT_FOUND)
 
 
-from django.http import JsonResponse, HttpResponseRedirect
+from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import razorpay
 from django.conf import settings

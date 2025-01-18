@@ -6,6 +6,10 @@ from home.models import Customer
 
 class CustomAuthBackend(BaseBackend):
     def authenticate(self, request, username=None, password=None, **kwargs):
+        # Reference 'request' and 'kwargs' to prevent warnings or errors
+        _ = request
+        _ = kwargs
+
         try:
             if '@' in username:
                 # Email login
@@ -20,7 +24,8 @@ class CustomAuthBackend(BaseBackend):
         except (User.DoesNotExist, Customer.DoesNotExist):
             return None
 
-        if user.check_password(password):
+        # Safely check if 'user' has check_password
+        if hasattr(user, 'check_password') and user.check_password(password):
             return user
         return None
 

@@ -6,7 +6,7 @@ import NewsLetter from "@/app/Components/NewsLetterSH";
 import Link from "next/link";
 import LoginSection from "./login";
 import SignupSection from "./signup";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 
 export default function LoginSignup() {
     const [isFlip, setIsFlip] = useState(false);
@@ -38,13 +38,13 @@ export default function LoginSignup() {
                     <div className={`login-register__container container grid ${isFlip ? 'flipped' : ''}`}>
                         <div className="flip-card">
                             <div className="flip-card-inner">
-                                <div className="flip-card-front m-auto">
+                                <div className="flip-card-front m-auto relative">
                                     <LoginSection onToggleFlip={toggleFlip} />
                                 </div>
-                                <div className="flip-card-back m-auto">
+                                <div className="flip-card-back m-auto relative">
                                     <SignupSection onToggleFlip={toggleFlip} />
                                 </div>
-                            </div>                            
+                            </div>
                         </div>
                     </div>
                 </section>

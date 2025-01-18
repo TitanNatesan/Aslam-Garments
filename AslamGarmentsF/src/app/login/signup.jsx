@@ -24,7 +24,7 @@ export default function SignupSection({ onToggleFlip }) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
-    const [phone, setPhone] = useState("");
+    const [phone, setPhone] = useState("+91");
     const [open, setOpen] = useState(false);
     const [profilePic, setProfilePic] = useState(null);
     const [profilePicPreview, setProfilePicPreview] = useState(null);
@@ -89,8 +89,11 @@ export default function SignupSection({ onToggleFlip }) {
             }
         }).catch((err) => {
             console.log(err)
-            for (let key in err.response.data){
-                toast.error(err.response.data[key],{autoClose:5000,position: "top-right"})
+            for (let key in err.response.data) {
+                toast.error(err.response.data[key], { autoClose: 5000, position: "top-right" })
+            }
+            if (err.response.data['message']) {
+                toast.error(err.response.data['message'][0], { autoClose: 5000, position: "top-right" })
             }
         });
     }

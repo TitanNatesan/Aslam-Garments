@@ -18,6 +18,8 @@ urlpatterns = [
     path("signup/", views.register, name="register"),
     path("login/", views.CustomAuthToken.as_view(), name="login"),
     path("logout/", views.logout, name="logout"),
+    path("resetpass/",views.resetPassword,name="Reset Password"),
+
     path("home/", views.Home, name="Home"),
     path("getProduct/<str:slug>/", views.getProduct, name="Get Product"),
     path("order/", views.order, name="Get Order"),

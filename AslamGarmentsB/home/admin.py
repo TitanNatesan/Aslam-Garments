@@ -314,6 +314,7 @@ class CustomerAdmin(UserAdmin):
         "gstNo",
         "is_wholeSaleUser",
         "profile_pic_preview",
+        "phone",
     )
     list_filter = ("is_staff", "is_superuser", "is_active", "date_joined")
     search_fields = ("username", "email", "gstNo", "first_name", "last_name")
