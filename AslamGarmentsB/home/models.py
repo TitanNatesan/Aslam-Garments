@@ -295,6 +295,10 @@ class CartItem(models.Model):
     @property
     def is_ordered(self):
         return Order.objects.filter(products = self).exists()
+    
+    @property
+    def status(self):
+        return Order.objects.filter(products = self).first().status if self.is_ordered else "Not Ordered"
 
 
 
@@ -315,6 +319,7 @@ class Order(models.Model):
     shipping_address = models.ForeignKey(ShippingAddress, on_delete=models.SET_NULL,null=True,blank=True)
     products = models.ManyToManyField(CartItem, blank=True)
     STATUS_CHOICES = [
+        ("not_placed","Not Placed"),
         ("pending", "Pending"),
         ("confirmed", "Confirmed"),
         ("cancelled", "Cancelled"),

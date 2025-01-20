@@ -354,27 +354,26 @@ export default function AccountsSection() {
                   </div>
                </div>
 
-               {/* Change Password Tab */}
                <div className={`tab__content ${activeTab === 'change-password' ? 'active-tab' : ''}`} id="change-password">
                   <h3 className="tab__header">Change Password</h3>
                   <div className="tab__body">
                      <form className="grid form" onSubmit={ChangePassword}>
                         <input
-                           type="text"
+                           type="password"
                            placeholder="Current Password"
                            className="form__input"
                            value={currentPassword}
                            onChange={(e) => setCurrentPassword(e.target.value)}
                         />
                         <input
-                           type="text"
+                           type="password"
                            placeholder="New Password"
                            className="form__input"
                            value={newPassword}
                            onChange={(e) => setNewPassword(e.target.value)}
                         />
                         <input
-                           type="text"
+                           type="password"
                            placeholder="Confirm Password"
                            className="form__input"
                            value={confirmPassword}
@@ -387,14 +386,32 @@ export default function AccountsSection() {
                   </div>
                </div>
 
-               <div className={`tab__content ${activeTab === 'logout' ? 'active-tab' : ''}`} id="change-password">
+               <div className={`tab__content ${activeTab === 'logout' ? 'active-tab' : ''}`} id="logout">
                   <h3 className="tab__header">Logout</h3>
                   <div className="tab__body">
                      <button className="flex justify-evenly btn btn--md" onClick={() => {
-                        localStorage.clear();
-                        window.location.href = "/";
+                        axios.get(
+                           `${baseurl}/logout/`,
+                           {
+                              headers: {
+                                 Authorization: `Token ${localStorage.getItem("token")}`
+                              }
+                           }
+                        ).then((res) => {
+                           if (res.data.message === "Logout Successfully") {
+                              toast.success(res.data.message);
+                              localStorage.clear();
+                              window.location.href = "/";
+                           } else {
+                              toast.error("Error occurred during logout");
+                           }
+                        }).catch((err) => {
+                           console.log(err);
+                           toast.error("Error occurred during logout");
+                        });
                      }}>
-                        {/* <b>Save</b> */}
+                        <b>Logout</b>
+                        <svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 24 24" className="inline w-6 svg"></svg>
                         <svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 24 24" className="inline w-6 svg">
                            <path d="M22.488,11.63c-.063-.156-1.607-3.858-7.361-6.62-.499-.242-1.095-.029-1.334,.469s-.029,1.095,.469,1.334c2.947,1.415,4.617,3.056,5.502,4.19H6.745c-.553,0-1,.448-1,1s.447,1,1,1h13.005c-.895,1.139-2.574,2.79-5.488,4.19-.498,.239-.708,.836-.469,1.334,.172,.358,.529,.567,.902,.567,.145,0,.292-.032,.432-.099,5.577-2.677,7.189-6.208,7.354-6.603,.103-.243,.105-.519,.007-.763Z" />
                            <path d="M8.373,21.008c-1.75-.229-3.18-.533-3.922-.705-.312-1.231-1.012-4.433-1.012-8.301s.701-7.074,1.013-8.303c.736-.173,2.159-.479,3.92-.708,.548-.071,.934-.573,.862-1.121-.071-.548-.57-.938-1.12-.863-2.738,.356-4.657,.875-4.738,.897-.331,.091-.594,.346-.693,.675-.051,.167-1.243,4.164-1.243,9.422s1.192,9.254,1.243,9.422c.101,.331,.364,.586,.698,.676,.082,.022,2.018,.536,4.732,.892,.044,.005,.088,.008,.131,.008,.495,0,.925-.367,.99-.87,.072-.547-.313-1.05-.861-1.122Z" />

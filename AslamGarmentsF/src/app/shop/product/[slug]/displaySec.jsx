@@ -14,7 +14,7 @@ export default function DisplaySec({ product, variants }) {
     const [token, setToken] = useState();
 
     useEffect(() => {
-        if (product.avail_size && product.avail_size[0]){
+        if (product.avail_size && product.avail_size[0]) {
             setSize(product.avail_size[0].id);
         }
         setToken(localStorage.getItem("token"));
@@ -52,24 +52,33 @@ export default function DisplaySec({ product, variants }) {
     const buyNow = (e) => {
         e.preventDefault();
         const data = {
-            type:"single-product",
-            product: product.id,
-            quantity: quantity,
-            size: Ssize
+            type: "PP",
+            pid: product.id,
+            sid: Ssize
         }
-        if (token){
-            const conf = {headers:{Authorization:`Token ${token}`}}
-            axios.post(`${baseurl}/order/`,data,conf)
-            .then((res)=>{
-                console.log(res.data)
-            })
-            .catch((err)=>{
-                console.log(err.response.data)
-            })
+        if (token) {
+            const conf = { headers: { Authorization: `Token ${token}` } }
+            toast.promise(
+                axios.post(`${baseurl}/buynow/`, data, conf),
+                {
+                    pending: 'Processing your order...',
+                    success: {
+                        render({ data }) {
+                            const orderId = data.data.order_id;
+                            window.location.href = `/buy/${orderId}/`;
+                            return 'Order placed successfully!';
+                        }
+                    },
+                    error: {
+                        render({ data }) {
+                            return data.response.data.error;
+                        }
+                    }
+                }
+            );
         } else {
             toast.warn("Please login to continue");
         }
-        console.log(data);
     }
 
     return (

@@ -4,6 +4,8 @@ __pycache__/
 *$py.class
 
 AslamGarmentsB/media/*
+AslamGarmentsB/home/migrations/*
+!AslamGarmentsB/home/migrations/__init__.py
 
 # C extensions
 *.so

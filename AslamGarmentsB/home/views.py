@@ -15,6 +15,7 @@ from rest_framework.authtoken.models import Token
 from django.core.exceptions import ValidationError
 from django.contrib.auth.password_validation import validate_password
 
+# ic.disable()
 
 @api_view(["POST"])
 @permission_classes([AllowAny])
@@ -87,9 +88,12 @@ class CustomAuthToken(APIView):
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
 def logout(request):
-    request.user.auth_token.delete()
-    cont = {"user": request.user.username, "message": "Logout Successfully"}
-    return Response(cont)
+    try:
+        request.user.auth_token.delete()
+        cont = {"user": request.user.username, "message": "Logout Successfully"}
+        return Response(cont)
+    except Exception as e:
+        return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 @api_view(["GET"])
@@ -371,6 +375,10 @@ def getWholeSaleProducts(request):
         return Response(serializer.data)
 
 
+
+
+
+
 @api_view(["GET"])
 @permission_classes([AllowAny])
 def Home(request):
@@ -480,64 +488,6 @@ def GetReview(req, pid):
         return Response(cont)
 
 
-@api_view(["POST"])
-@permission_classes([IsAuthenticated])
-def AddToCart(req):
-    if req.method == "POST":
-        ic(req.data)
-        try:
-            product = models.Product.objects.get(pk=req.data["product"])
-            user = models.Customer.objects.get(username=req.user.username)
-            qty = int(req.data["quantity"])
-            size = models.Size.objects.get(pk=req.data["size"])
-
-            if qty <= 0:
-                return Response(
-                    {"error": "Quantity must be greater than zero"},
-                    status=status.HTTP_400_BAD_REQUEST,
-                )
-
-            cartItem, created = models.CartItem.objects.get_or_create(
-                user=user, product=product, size=size
-            )
-
-            if created:
-                if qty > 20:
-                    return Response(
-                        {"error": "Quantity cannot exceed 20"},
-                        status=status.HTTP_400_BAD_REQUEST,
-                    )
-                cartItem.quantity = qty
-                cartItem.color = product.product_color
-                cartItem.save()
-            else:
-                if cartItem.quantity + qty > 20:
-                    return Response(
-                        {"error": "Total quantity cannot exceed 20"},
-                        status=status.HTTP_400_BAD_REQUEST,
-                    )
-                cartItem.quantity += qty
-                cartItem.save()
-
-            return Response(
-                {"message": "Item added to cart successfully"},
-                status=status.HTTP_200_OK,
-            )
-
-        except models.Product.DoesNotExist:
-            return Response(
-                {"error": "Product not found"}, status=status.HTTP_404_NOT_FOUND
-            )
-        except models.Size.DoesNotExist:
-            return Response(
-                {"error": "Size not found"}, status=status.HTTP_404_NOT_FOUND
-            )
-        except Exception as e:
-            return Response(
-                {"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR
-            )
-
-
 @api_view(["GET", "POST"])
 @permission_classes([IsAuthenticated])
 def Cart(req):
@@ -571,22 +521,63 @@ def Cart(req):
 
 @api_view(["POST"])
 @permission_classes([IsAuthenticated])
-def Order(req):
+def AddToCart(req):
     if req.method == "POST":
-        product = models.Product.objects.get(pk=req.data["product"])
-        user = models.Customer.objects.get(user=req.user)
-        qty = int(req.data["quantity"])
-        size = models.Size.objects.get(pk=req.data["size"])
+        ic(req.data)
+        try:
+            product = models.Product.objects.get(pk=req.data["product"])
+            user = models.Customer.objects.get(username=req.user.username)
+            qty = int(req.data["quantity"])
+            size = models.Size.objects.get(pk=req.data["size"])
 
-        cartItem, created = models.CartItem.objects.get_or_create(
-            customer=user, product=product, size=size
-        )
-        if created:
-            cartItem.quantity = qty
-            cartItem.color = product.product_color
-            cartItem.save()
-            user.cart.add(cartItem)
-            user.save()
+            if qty <= 0: return Response({"error": "Quantity must be greater than zero"},status=status.HTTP_400_BAD_REQUEST)
+
+            cartItem, created = models.CartItem.objects.get_or_create(user=user, product=product, size=size)
+
+            if created:
+                if qty > 20: return Response({"error": "Quantity cannot exceed 20"},status=status.HTTP_400_BAD_REQUEST)
+                cartItem.quantity = qty
+                cartItem.color = product.product_color # ithu irukardhala error varala, working good
+                cartItem.save()
+            else:
+                if cartItem.quantity + qty > 20: return Response({"error": "Total quantity cannot exceed 20"},status=status.HTTP_400_BAD_REQUEST)
+                cartItem.quantity += qty
+                cartItem.save()
+
+            return Response({"message": "Item added to cart successfully"},status=status.HTTP_200_OK)
+
+        except models.Product.DoesNotExist: return Response({"error": "Product not found"}, status=status.HTTP_404_NOT_FOUND)
+        except models.Size.DoesNotExist: return Response({"error": "Size not found"}, status=status.HTTP_404_NOT_FOUND)
+        except Exception as e: return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+@api_view(["POST"])
+@permission_classes([IsAuthenticated])
+def BuyNow(req):
+    ic(req.data)
+    if req.method == "POST" and req.data.get('type') == "PP":
+        try:
+            customer = models.Customer.objects.get(username=req.user.username)
+            product = models.Product.objects.get(pk=req.data.get('pid'))
+            size = models.Size.objects.get(pk=req.data.get('sid'))
+
+            item, created = models.CartItem.objects.get_or_create(user=customer, product=product, size=size)
+            if created: item.save()
+            order = models.Order.objects.create(customer=customer, status="Not Placed")
+            order.products.add(item)
+            order.save()
+
+            return Response({"message": "Order Created Successfully", "order_id": order.id}, status=status.HTTP_201_CREATED)
+        except models.Customer.DoesNotExist:
+            return Response({"error": "Customer not found"}, status=status.HTTP_404_NOT_FOUND)
+        except models.Product.DoesNotExist:
+            return Response({"error": "Product not found"}, status=status.HTTP_404_NOT_FOUND)
+        except models.Size.DoesNotExist:
+            return Response({"error": "Size not found"}, status=status.HTTP_404_NOT_FOUND)
+        except Exception as e:
+            ic(e)
+            return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    return Response({"error": "Invalid request type"}, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(["GET", "POST", "PUT", "DELETE"])

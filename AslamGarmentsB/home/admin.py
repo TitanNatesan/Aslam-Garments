@@ -18,6 +18,7 @@ import base64
 from django.urls import reverse
 from matplotlib.figure import Figure
 import io
+from icecream import ic
 
 
 TokenAdmin.raw_id_fields = ["user"]
@@ -1012,10 +1013,11 @@ class CartItemAdmin(admin.ModelAdmin):
 
     # Custom color display
     def color_display(self, obj):
-        if hasattr(obj.product, "color") and obj.product.color:
-            return mark_safe(f'<div style="background-color:{obj.product.color.hexcode}; width: 50px; height: 20px;"></div>')
+        ic(obj.product.product_color)
+        if hasattr(obj.product, "product_color") and obj.product.product_color:
+            return mark_safe(f'<div style="background-color:{obj.product.product_color.hexcode}; width: 50px; height: 20px;"></div>')
         return "No Color"
-    color_display.short_description = "Product Color"
+    color_display.short_description = "Product Color" 
 
     # Custom user display
     def user_display(self, obj):

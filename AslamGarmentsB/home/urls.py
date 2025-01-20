@@ -20,6 +20,7 @@ urlpatterns = [
     path("logout/", views.logout, name="logout"),
     path("resetpass/",views.resetPassword,name="Reset Password"),
 
+
     path("home/", views.Home, name="Home"),
     path("getProduct/<str:slug>/", views.getProduct, name="Get Product"),
     path("order/", views.order, name="Get Order"),
@@ -27,6 +28,7 @@ urlpatterns = [
     path("review/", views.Review, name="Add Review"),
     path("getReviews/<int:pid>/", views.GetReview, name="Get Reviews"),
     path("add2cart/",views.AddToCart,name="Add To Cart"),
+    path("buynow/",views.BuyNow,name="Buy Now"),
     path("cart/",views.Cart,name="Cart"),
     path("profile/", views.profile, name="Profile"),
     path("verify_payment/",views.verify_payment,name="Verify Payment"),
