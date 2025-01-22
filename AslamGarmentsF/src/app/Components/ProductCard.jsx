@@ -1,9 +1,4 @@
-<<<<<<< HEAD
-"use client";
-=======
 "use client"
-
->>>>>>> 5a3f33a061b78ef188cee03f55d542a38d7926a0
 import Image from "next/image"
 import { useEffect, useState } from "react";
 import { baseurl } from "../utils/Url";
@@ -21,11 +16,9 @@ const badgeColors = [
 
 export default function ProductCard({ product }) {
 
-<<<<<<< HEAD
-    useEffect(()=>{
+    useEffect(() => {
         console.log(product)
-    },[])
-=======
+    }, [])
     const [badgeColor, setBadgeColor] = useState("");
 
     useEffect(() => {
@@ -35,18 +28,13 @@ export default function ProductCard({ product }) {
         };
         setBadgeColor(getRandomColor());
     }, []);
->>>>>>> 5a3f33a061b78ef188cee03f55d542a38d7926a0
 
     return (
         <div className="product__item" data-aos="fade-up">
             <div className="product__banner">
                 <Link href={`/shop/product/${product.slug}`} className="product__images">
                     <Image
-<<<<<<< HEAD
-                        src={`${baseurl}${product.img1}`}
-=======
-                        src={baseurl+"/"+product.img1}
->>>>>>> 5a3f33a061b78ef188cee03f55d542a38d7926a0
+                        src={baseurl + "/" + product.img1}
                         alt={product.name}
                         width={600}
                         height={600}
@@ -56,11 +44,7 @@ export default function ProductCard({ product }) {
                         data-aos-delay="200"
                     />
                     <Image
-<<<<<<< HEAD
-                        src={`${baseurl}${product.img2}`}
-=======
-                        src={baseurl+"/"+product.img2}
->>>>>>> 5a3f33a061b78ef188cee03f55d542a38d7926a0
+                        src={baseurl + "/" + product.img2}
                         alt={product.name}
                         width={600}
                         height={600}
@@ -80,21 +64,21 @@ export default function ProductCard({ product }) {
                         <i className="fi fi-rs-shuffle"></i>
                     </a>
                 </div>
-                <div className={`product__badge ${badgeColor}`} data-aos="zoom-out"data-aos-offset="200">{product.badge}</div>
+                <div className={`product__badge ${badgeColor}`} data-aos="zoom-out" data-aos-offset="200">{product.badge}</div>
             </div>
             <div className="product__content">
-                <span className="product__category"data-aos="fade-left" data-aos-anchor-placement="bottom-bottom"data-aos-offset="50">{product.category}</span>
+                <span className="product__category" data-aos="fade-left" data-aos-anchor-placement="bottom-bottom" data-aos-offset="50">{product.category}</span>
                 <Link href={`/shop/product/${product.id}`}>
-                    <h3 className="product__title"data-aos="zoom-out" data-aos-anchor-placement="bottom-bottom"data-aos-offset="50">{product.name}</h3>
+                    <h3 className="product__title" data-aos="zoom-out" data-aos-anchor-placement="bottom-bottom" data-aos-offset="50">{product.name}</h3>
                 </Link>
                 <div className="product__rating">
                     {[...Array(product.rating)].map((_, i) => (
-                        <i key={i} className="fi fi-rs-star" data-aos="fade-up" data-aos-anchor-placement="bottom-bottom"data-aos-offset="50" data-aos-delay={(i*250)+100} ></i>
+                        <i key={i} className="fi fi-rs-star" data-aos="fade-up" data-aos-anchor-placement="bottom-bottom" data-aos-offset="50" data-aos-delay={(i * 250) + 100} ></i>
                     ))}
                 </div>
-                <div className="product__price flex">   
-                    <span className="new__price"data-aos="zoom-out" data-aos-anchor-placement="bottom-bottom"data-aos-offset="50">₹{product.newPrice}</span>
-                    <span className="old__price"data-aos="zoom-out" data-aos-anchor-placement="bottom-bottom"data-aos-offset="50">₹{product.oldPrice}</span>
+                <div className="product__price flex">
+                    <span className="new__price" data-aos="zoom-out" data-aos-anchor-placement="bottom-bottom" data-aos-offset="50">₹{product.newPrice}</span>
+                    <span className="old__price" data-aos="zoom-out" data-aos-anchor-placement="bottom-bottom" data-aos-offset="50">₹{product.oldPrice}</span>
                 </div>
                 <a
                     href="#"
