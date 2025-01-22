@@ -73,7 +73,6 @@ class ShippingAddress(models.Model):
     class Meta:
         verbose_name = "Shipping Address"
         verbose_name_plural = "Shipping Addresses"
-        
 
 
 class Product(models.Model):
@@ -159,7 +158,7 @@ class Product(models.Model):
         verbose_name_plural = "Products"
 
 class ProductImages(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="product_images")
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="product_images/")
     image = models.ImageField(upload_to="product_images/")
 
     def __str__(self):

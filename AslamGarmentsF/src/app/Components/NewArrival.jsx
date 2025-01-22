@@ -1,10 +1,12 @@
+"use client"
+
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, EffectCoverflow } from 'swiper/modules';
 import ProductCard from "./ProductCard"
 import useWindowDimensions from "../utils/getDimentions"
 
 
-export default function NewArrival({ products }) {
+export default function NewArrival({products}) {
 
   const { width, height } = useWindowDimensions();
 

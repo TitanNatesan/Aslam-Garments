@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 "use client"
 import Link from "next/link";
 import { useEffect } from "react";
@@ -448,4 +449,16 @@ export default function ProfilePage() {
       </section>
       </>
   )
+=======
+"use client";
+import React, { use } from "react";
+
+export default function BuyNowPage({ params }) {
+    const { slug } = use(params);
+    return (
+        <div>
+            <h1>{slug}</h1>
+        </div>
+    );
+>>>>>>> 5a3f33a061b78ef188cee03f55d542a38d7926a0
 }

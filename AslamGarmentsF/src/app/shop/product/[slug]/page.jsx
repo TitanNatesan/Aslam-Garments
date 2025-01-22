@@ -1,6 +1,7 @@
 "use client"
 import FootBar from "@/app/Components/footer";
 import Navbar from "@/app/Components/Navbar";
+import Image from "next/image";
 import product11 from "@/app/assets/img/product-1-1.jpg"
 import product12 from "@/app/assets/img/product-1-2.jpg"
 import avatar1 from "@/app/assets/img/avatar-1.jpg"
@@ -8,6 +9,7 @@ import avatar2 from "@/app/assets/img/avatar-2.jpg"
 import avatar3 from "@/app/assets/img/avatar-3.jpg"
 import React, { useState, useEffect } from "react";
 import NewsLetter from "@/app/Components/NewsLetterSH";
+import ProductCard from "@/app/Components/ProductCard";
 import Link from "next/link";
 import axios from "axios";
 import "./style.css"
@@ -25,23 +27,23 @@ export default function ProductPage({ params: paramsPromise }) {
 
     const params = React.use(paramsPromise);
 
-    const [products, setProduct] = useState({
-        name: "",
-        brand: "",
-        newPrice: "",
-        oldPrice: "",
-        savePrice: "",
-        discription: ``,
+    const [productttz, setProduct] = useState({
+        name: "loading...",
+        brand: "loading...",
+        newPrice: "$loading...",
+        oldPrice: "$loading...",
+        savePrice: "loading...% Off",
+        discription: `loading...`,
         warranty: "1 Year Al Jazeera Brand Warranty",
         returnPolicy: "30 Days Return Policy",
         paymentOption: "Cash on Delivery available",
         colors: [
             { name: "Cyan", className: "bg-cyan-400" },
         ],
-        sizes: [""],
-        SKU: "",
-        tags: [""],
-        availability: "",
+        sizes: ["M"],
+        SKU: "FWM15VKT",
+        tags: ["loading..."],
+        availability: "loading... Items in Stock",
         images: [
             product11,
             product12,
@@ -97,14 +99,14 @@ export default function ProductPage({ params: paramsPromise }) {
                         <li><span className="breadcrumb__link"></span>  〉</li>
                         <li><Link href={"/shop/"} className="breadcrumb__link">Shop</Link></li>
                         <li><span className="breadcrumb__link"></span>  〉</li>
-                        <li><span className="breadcrumb__link">{products.name}</span></li>
+                        <li><span className="breadcrumb__link">{productttz.name}</span></li>
                     </ul>
                 </section>
 
-                <DisplaySec product={products} variants={variants} />
+                <DisplaySec product={productttz} variants={variants} />
 
                 <section className="details__tab container">
-                    <SizeChart product={products} />
+                    <SizeChart product={productttz} />
 
                     <div className="detail__tabs">
                         <span onClick={() => setXtra("RV")} className={xtra === "RV" ? `detail__tab active-tab rativ` : "detail__tab"} data-target="#reviews">
@@ -117,12 +119,12 @@ export default function ProductPage({ params: paramsPromise }) {
                     <div className="details__tabs-content">
                         {xtra === "AI" &&
                             <div className={xtra === "AI" ? `detail__tab-content active-tab` : "detail__tab-content"} id="info">
-                                <AddInfoTab product={products} />
+                                <AddInfoTab product={productttz} />
                             </div>
                         }
                         {xtra === "RV" &&
                             <div className={xtra === "RV" ? `detail__tab-content active-tab` : "detail__tab-content"} id="reviews">
-                                <Reviwes pid={products.id} setTR={setTr} />
+                                <Reviwes pid={productttz.id} setTR={setTr} />
                             </div>
                         }
                         <ReviewForm pid={params.slug}/>

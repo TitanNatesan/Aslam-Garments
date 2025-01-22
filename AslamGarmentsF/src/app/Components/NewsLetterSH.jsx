@@ -14,7 +14,7 @@ export default function NewsLetter() {
           Sign in to Newsletter
         </h3>
         <p className="newsletter__description">
-          {/* ...and receive $25 coupon for first shopping. */}
+          ...and receive $25 coupon for first shopping.
         </p>
         <form action="" className="newsletter__form">
           <input

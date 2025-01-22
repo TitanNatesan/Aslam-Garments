@@ -1,3 +1,4 @@
+
 import ShowCaseItem from "./ShowCaseItem"
 
 export default function ShowCase({hot_releases, trendy, best_deal}) {
