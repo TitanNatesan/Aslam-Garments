@@ -51,7 +51,7 @@ export default function Home() {
 
   return (
     <>
-      <Loader />
+      {/* <Loader /> */}
       <Navbar page={"Home"} />
       <main className="main">
         <section className="home section--lg">

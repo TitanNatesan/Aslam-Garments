@@ -73,7 +73,6 @@ class ShippingAddress(models.Model):
     class Meta:
         verbose_name = "Shipping Address"
         verbose_name_plural = "Shipping Addresses"
-        
 
 
 class Product(models.Model):
