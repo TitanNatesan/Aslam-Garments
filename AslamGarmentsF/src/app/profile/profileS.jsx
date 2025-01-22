@@ -7,7 +7,7 @@ import { toast } from 'react-toastify';
 import AddressEdit from './AEPU';
 
 export default function AccountsSection() {
-   const [activeTab, setActiveTab] = useState('orders');
+   const [activeTab, setActiveTab] = useState('update-profile');
    const tabs = [
       { id: 'update-profile', label: 'Profile Info', icon: 'fi fi-rs-user' },
       { id: 'shipping-address', label: 'Shipping Address', icon: 'fi fi-rs-location-alt' },
@@ -31,7 +31,7 @@ export default function AccountsSection() {
             console.log(res.data);
             setUser(res.data['ProfileInfo']);
             setAddresses(res.data['ShippingAddresses']);
-            if(res.data['ProfileInfo'].pic === !null ){
+            if (res.data['ProfileInfo'].pic === !null) {
                setProfilePic(`${baseurl}${res.data['ProfileInfo'].pic}`);
             }
             setEditablePI(false);

@@ -1,11 +1,7 @@
-"use client"
 import Image from "next/image"
-import { useEffect, useState } from "react";
 import { baseurl } from "../utils/Url";
 import Link from "next/link";
 import "./style.css";
-import { useEffect } from "react";
-
 
 const badgeColors = [
     "light-pink",
@@ -15,19 +11,6 @@ const badgeColors = [
 ];
 
 export default function ProductCard({ product }) {
-
-    useEffect(() => {
-        console.log(product)
-    }, [])
-    const [badgeColor, setBadgeColor] = useState("");
-
-    useEffect(() => {
-        const getRandomColor = () => {
-            const randomIndex = Math.floor(Math.random() * badgeColors.length);
-            return badgeColors[randomIndex];
-        };
-        setBadgeColor(getRandomColor());
-    }, []);
 
     return (
         <div className="product__item" data-aos="fade-up">
@@ -64,11 +47,11 @@ export default function ProductCard({ product }) {
                         <i className="fi fi-rs-shuffle"></i>
                     </a>
                 </div>
-                <div className={`product__badge ${badgeColor}`} data-aos="zoom-out" data-aos-offset="200">{product.badge}</div>
+                <div className={`product__badge ${badgeColors[Math.floor(Math.random() * badgeColors.length)]}`} data-aos="zoom-out" data-aos-offset="200">{product.badge}</div>
             </div>
             <div className="product__content">
                 <span className="product__category" data-aos="fade-left" data-aos-anchor-placement="bottom-bottom" data-aos-offset="50">{product.category}</span>
-                <Link href={`/shop/product/${product.id}`}>
+                <Link href={`/shop/product/${product.slug}`}>
                     <h3 className="product__title" data-aos="zoom-out" data-aos-anchor-placement="bottom-bottom" data-aos-offset="50">{product.name}</h3>
                 </Link>
                 <div className="product__rating">

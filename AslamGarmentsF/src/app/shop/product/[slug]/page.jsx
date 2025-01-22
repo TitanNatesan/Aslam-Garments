@@ -1,7 +1,6 @@
 "use client"
 import FootBar from "@/app/Components/footer";
 import Navbar from "@/app/Components/Navbar";
-import Image from "next/image";
 import product11 from "@/app/assets/img/product-1-1.jpg"
 import product12 from "@/app/assets/img/product-1-2.jpg"
 import avatar1 from "@/app/assets/img/avatar-1.jpg"
@@ -9,7 +8,6 @@ import avatar2 from "@/app/assets/img/avatar-2.jpg"
 import avatar3 from "@/app/assets/img/avatar-3.jpg"
 import React, { useState, useEffect } from "react";
 import NewsLetter from "@/app/Components/NewsLetterSH";
-import ProductCard from "@/app/Components/ProductCard";
 import Link from "next/link";
 import axios from "axios";
 import "./style.css"
@@ -20,7 +18,6 @@ import Reviwes from "./reviews";
 import SizeChart from "./sizechart";
 import AddInfoTab from "./AItab";
 import DisplaySec from "./displaySec";
-import Image from 'next/image';
 
 
 export default function ProductPage({ params: paramsPromise }) {
