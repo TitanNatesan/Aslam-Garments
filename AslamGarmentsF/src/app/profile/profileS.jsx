@@ -31,7 +31,9 @@ export default function AccountsSection() {
             console.log(res.data);
             setUser(res.data['ProfileInfo']);
             setAddresses(res.data['ShippingAddresses']);
-            setProfilePic(`${baseurl}${res.data['ProfileInfo'].pic}`);
+            if(res.data['ProfileInfo'].pic === !null ){
+               setProfilePic(`${baseurl}${res.data['ProfileInfo'].pic}`);
+            }
             setEditablePI(false);
          }).catch((err) => {
             console.log(err);

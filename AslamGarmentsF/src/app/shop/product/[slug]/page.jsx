@@ -18,6 +18,8 @@ import Reviwes from "./reviews";
 import SizeChart from "./sizechart";
 import AddInfoTab from "./AItab";
 import DisplaySec from "./displaySec";
+import Image from 'next/image';
+
 
 export default function ProductPage({ params: paramsPromise }) {
 

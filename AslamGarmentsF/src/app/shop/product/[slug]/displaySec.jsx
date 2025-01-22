@@ -5,6 +5,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+// import Image from 'next/image';  
+
 
 export default function DisplaySec({ product, variants }) {
 
@@ -12,6 +14,11 @@ export default function DisplaySec({ product, variants }) {
     const [quantity, setQuantity] = useState(1);
     const [Ssize, setSize] = useState();
     const [token, setToken] = useState();
+
+    useEffect(()=>{
+        console.log(product);
+        
+    },[product])
 
     useEffect(() => {
         if (product.avail_size && product.avail_size[0]) {
@@ -107,7 +114,7 @@ export default function DisplaySec({ product, variants }) {
                                 height={140}
                                 onClick={() => setCurrentImgIdx(index)}
                             />
-                        ))}
+                        ))} 
                     </div>
                 </div>
                 <div className="details__group">

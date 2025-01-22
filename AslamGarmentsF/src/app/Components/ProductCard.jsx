@@ -1,7 +1,9 @@
+"use client";
 import Image from "next/image"
 import { baseurl } from "../utils/Url";
 import Link from "next/link";
 import "./style.css";
+import { useEffect } from "react";
 
 
 const badgeColors = [
@@ -13,12 +15,16 @@ const badgeColors = [
 
 export default function ProductCard({ product }) {
 
+    useEffect(()=>{
+        console.log(product)
+    },[])
+
     return (
         <div className="product__item" data-aos="fade-up">
             <div className="product__banner">
                 <Link href={`/shop/product/${product.slug}`} className="product__images">
                     <Image
-                        src={baseurl + "/" + product.img1}
+                        src={`${baseurl}${product.img1}`}
                         alt={product.name}
                         width={600}
                         height={600}
@@ -28,7 +34,7 @@ export default function ProductCard({ product }) {
                         data-aos-delay="200"
                     />
                     <Image
-                        src={baseurl + "/" + product.img2}
+                        src={`${baseurl}${product.img2}`}
                         alt={product.name}
                         width={600}
                         height={600}
