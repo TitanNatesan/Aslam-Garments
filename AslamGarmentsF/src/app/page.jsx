@@ -52,6 +52,10 @@ export default function Home() {
 
   return (
     <>
+<<<<<<< HEAD
+=======
+      {/* <Loader /> */}
+>>>>>>> 23d4004e4673794ffbbe871e053b15c665aaf8f6
       <Navbar page={"Home"} />
       <main className="main">
         <section className="home section--lg">
