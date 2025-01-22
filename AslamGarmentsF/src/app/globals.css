@@ -6,11 +6,12 @@
 
 @layer utilities {
   .no-scrollbar::-webkit-scrollbar {
-      display: none;
+    display: none;
   }
+
   .no-scrollbar {
-      -ms-overflow-style: none;
-      scrollbar-width: none;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
 }
 
@@ -857,7 +858,7 @@ tr:hover {
   height: 100%;
 
   object-fit: cover;
-  z-index: -1;
+  z-index: 0;
 }
 
 .deals__brand {
@@ -876,11 +877,13 @@ tr:hover {
   font-size: var(--large-font-size);
   font-weight: var(--weight-400);
   line-height: 1.3;
+  z-index: 1;
 }
 
 .deals__price .new__price,
 .deals__price .old__price {
   font-size: var(--large-font-size);
+  z-index: 1;
 }
 
 .deals__price .new__price {
@@ -891,6 +894,7 @@ tr:hover {
   display: flex;
   flex-direction: column;
   row-gap: 0.5rem;
+  z-index: 1;
 }
 
 .deal__countdown-text {
@@ -945,6 +949,7 @@ tr:hover {
 .deals__btn .btn {
   background-color: transparent;
   color: var(--first-color);
+  z-index: 1;
 }
 
 /*=============== NEW ARRIVALS ===============*/
@@ -1741,7 +1746,7 @@ tr:hover {
 }
 
 .login,
-.register  {
+.register {
   border: 1px solid var(--border-color-alt);
   padding: 2rem;
   border-radius: 0.5rem;
@@ -2204,6 +2209,7 @@ tr:hover {
   .header__search {
     max-width: 300px;
   }
+
   .swiper-button-next,
   .swiper-button-prev {
     top: 5%;

@@ -1,4 +1,3 @@
-"use client";
 import { baseurl } from "@/app/utils/Url";
 import axios from "axios";
 import { useState } from "react";
@@ -24,24 +23,24 @@ export default function ReviewForm({ pid }) {
             review: review,
             product: pid,
         }
-        axios.post(`${baseurl}/review/`, data,{
-            headers:{
+        axios.post(`${baseurl}/review/`, data, {
+            headers: {
                 Authorization: `Token ${localStorage.getItem("token")}`
             }
-        }).then((res)=>{
-            if (res.data.message==="Success"){
+        }).then((res) => {
+            if (res.data.message === "Success") {
                 console.log(res.data);
-                toast.success("Review Added Successfully",{position:"top-center",autoClose:5000})
+                toast.success("Review Added Successfully", { position: "top-center", autoClose: 5000 })
                 setRating(0);
                 setReview("");
             }
-            else{
+            else {
                 console.log(res.data);
-                toast.error("Error Occured",{position:"top-center",autoClose:5000})
+                toast.error("Error Occured", { position: "top-center", autoClose: 5000 })
             }
-        }).catch((err)=>{
+        }).catch((err) => {
             console.log(err);
-            toast.error("Error Occured",{position:"top-center",autoClose:5000})
+            toast.error("Error Occured", { position: "top-center", autoClose: 5000 })
         })
     }
 
@@ -68,7 +67,7 @@ export default function ReviewForm({ pid }) {
                     onChange={(e) => setReview(e.target.value)}
                 ></textarea>
                 <div className="form__btn">
-                    <button className="btn" onClick={submitReview}>Submit Review</button>
+                    <button className="btn" onClick={submitReview} suppressHydrationWarning >Submit Review</button>
                 </div>
             </form>
         </div>

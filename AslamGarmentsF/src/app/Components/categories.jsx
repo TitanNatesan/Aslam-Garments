@@ -1,4 +1,3 @@
-
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from 'swiper/modules';
 import Image from "next/image";
@@ -6,7 +5,7 @@ import "../globals.css"
 import { baseurl } from "../utils/Url";
 
 
-export default function Categories({categories}) {
+export default function Categories({ categories }) {
   return (
     <section className="categories container section">
       <h3 className="section__title" data-aos="fade-right"><span>Popular</span> Categories</h3>

@@ -65,7 +65,7 @@ export default function DealCard({ deal }) {
                     </div>
                 </div>
             </div>
-            <div className="deals__btn">
+            <div className="deals__btn z-0">
                 <a href="details.html" className="btn btn--md">Shop Now</a>
             </div>
         </div>

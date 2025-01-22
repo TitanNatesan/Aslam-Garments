@@ -1,21 +1,22 @@
 "use client";
 
-import Image from "next/image";
 import React, { useEffect, useState } from 'react';
 import 'aos/dist/aos.css'; // Import AOS CSS
+import "./globals.css";
 import AOS from 'aos';
-import Categories from "./Components/categories";
 import ProductSection from "./Components/ProductSH";
 import DealSection from "./Components/DealsSH";
+import Categories from "./Components/categories";
 import NewsLetter from "./Components/NewsLetterSH";
-import logo from "./assets/img/logo.png";
 import NewArrival from "./Components/NewArrival";
 import ShowCase from "./Components/ShowCase";
-import Navbar from "./Components/Navbar";
 import FootBar from "./Components/footer";
-import "./globals.css";
+import Navbar from "./Components/Navbar";
+import Image from "next/image";
 import axios from "axios";
+import logo from "./assets/img/logo.png";
 import { baseurl } from "./utils/Url";
+import Loader from './Components/loader';
 
 export default function Home() {
 
@@ -27,13 +28,11 @@ export default function Home() {
   const [hotReleases, setHotReleases] = useState([]);
 
   useEffect(() => {
-    document.title = "Renz Trending - Home";
     AOS.init({ duration: 500 });
-  }, []);
+    document.title = "Renz Trending - Home";
 
-  useEffect(() => {
     const token = localStorage.getItem('token');
-    const config = token ? { headers: { Authorization: `Bearer ${token}` } } : {};
+    const config = token ? { headers: { Authorization: `Token ${token}` } } : {};
 
     axios.get(`${baseurl}/home/`, config)
       .then((res) => {
@@ -52,6 +51,7 @@ export default function Home() {
 
   return (
     <>
+      <Loader />
       <Navbar page={"Home"} />
       <main className="main">
         <section className="home section--lg">
@@ -69,11 +69,12 @@ export default function Home() {
             <Image data-aos="zoom-in" src={logo} className="home__img" alt="hats" priority={true} />
           </div>
         </section>
-        <Categories categories={categories}/>
-        <ProductSection products={products}/>
+
+        <Categories categories={categories} />
+        <ProductSection products={products} />
         <DealSection />
         <NewArrival products={newArrival} />
-        <ShowCase trendy={trendy} hot_releases={hotReleases} best_deal={bestDeal}/>
+        <ShowCase trendy={trendy} hot_releases={hotReleases} best_deal={bestDeal} />
         <NewsLetter />
       </main>
       <FootBar />

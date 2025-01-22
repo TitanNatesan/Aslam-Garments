@@ -1,6 +1,6 @@
 import DealCard from "./DealCard";
-import deal1 from "../assets/img/deals-1.jpg";
-import deal2 from "../assets/img/deals-2.png";
+import deal1 from '../assets/img/deals1.jpg';
+import deal2 from "../assets/img/deals2.png";
 
 export default function DealSection() {
     const deals = [
@@ -9,7 +9,7 @@ export default function DealSection() {
             description: "Summer Collection New Modern Design",
             oldPrice: 160.99,
             newPrice: 139.00,
-            timeEnds: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000), 
+            timeEnds: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000),
             img: deal1,
         },
         {
@@ -17,7 +17,7 @@ export default function DealSection() {
             description: "Winter Collection Elegant Style",
             oldPrice: 180.99,
             newPrice: 159.00,
-            timeEnds: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000), 
+            timeEnds: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000),
             img: deal2,
         },
     ];

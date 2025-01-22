@@ -164,7 +164,7 @@ export default function DisplaySec({ product, variants }) {
                         </ul>
                     </div>
                     <div className="details__action">
-                        <input type="number" className="quantity" value={quantity} onChange={(e) => setQuantity(e.target.value)} min={1} max={20} />
+                        <input type="number" className="quantity" suppressHydrationWarning value={quantity} onChange={(e) => setQuantity(e.target.value)} min={1} max={20} />
                         <a href="#" onClick={addToCart} className="btn btn--sm">Add To Cart</a>
                         <a href="#" onClick={buyNow} className="btn btn--sm">Buy Now</a>
                         <a href="#" className="details__action-btn">
