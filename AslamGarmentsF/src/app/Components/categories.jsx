@@ -34,7 +34,14 @@ export default function Categories({categories}) {
             <SwiperSlide key={index} virtualIndex={index} >
               <a href="/shop" className="category__item swiper-slide" data-aos="fade-up" data-aos-anchor-placement="top-bottom" data-aos-delay={index * 150}>
                 {/* <Image src={`${baseurl}/media/?${(category.image.toString().slice(6,-1))}`} width={20} height={20} alt={category.alt} className="category__img" /> */}
-                <Image src={`${baseurl}${(category.image)}`} width={100} height={100} alt={category.name} className="category__img w-full h-48" />
+                {/* <Image src={`${baseurl}/ ${(category.image)}`} width={100} height={100} alt={category.name} className="category__img w-full h-48" /> */}
+                <Image
+                      src={baseurl+"/"+category.image}
+                      width={100}
+                      height={100}
+                      alt={category.name}
+                      className="category__img w-full h-48"
+                  />
                 <h3 className="category__title">{category.name}</h3>
               </a>
             </SwiperSlide>

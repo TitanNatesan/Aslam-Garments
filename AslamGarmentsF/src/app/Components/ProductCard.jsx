@@ -74,8 +74,8 @@ export default function ProductCard({ product }) {
                     ))}
                 </div>
                 <div className="product__price flex">   
-                    <span className="new__price"data-aos="zoom-out" data-aos-anchor-placement="bottom-bottom"data-aos-offset="50">₹{product.oldPrice}</span>
-                    <span className="old__price"data-aos="zoom-out" data-aos-anchor-placement="bottom-bottom"data-aos-offset="50">₹{product.newPrice}</span>
+                    <span className="new__price"data-aos="zoom-out" data-aos-anchor-placement="bottom-bottom"data-aos-offset="50">₹{product.newPrice}</span>
+                    <span className="old__price"data-aos="zoom-out" data-aos-anchor-placement="bottom-bottom"data-aos-offset="50">₹{product.oldPrice}</span>
                 </div>
                 <a
                     href="#"
